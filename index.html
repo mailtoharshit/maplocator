@@ -1,0 +1,759 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <style>
+* {
+        box-sizing: border-box;
+    }
+    
+    .row {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .row::after {
+        content: "";
+        clear: both;
+        display: block;
+    }
+    
+    [class*="col-"] {
+        float: left;
+        padding: 15px;
+    }
+    
+    html {
+        font-family: "Roboto", sans-serif;
+    }
+    
+    .menu ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .menu li {
+        padding: 8px;
+        margin-bottom: 7px;
+        margin-top: 3%;
+        background-color: #DAD9DA;
+        color: #424242;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    }
+    
+    .menu li:hover {
+        background-color: #424242;
+        color: White;
+    }
+    
+    .header {
+        background-color: #55A8DE;
+        color: #ffffff;
+        position: relative;
+        width: 100%;
+        height: 10%;
+    }
+    
+    p {
+        text-align: justify;
+    }
+    
+    .center {
+        text-align: center;
+    }
+    
+    .heading {
+        background-color: #424242;
+        ;
+    }
+    
+    h5 {
+        text-align: center;
+        font-family: "Roboto";
+        font-weight: lighter;
+        color: white;
+        margin: 0rem 0 0rem 0;
+        padding-top: 25px;
+    }
+    
+    #description {
+        font-size: 22px;
+        color: grey;
+    }
+    
+    b,
+    strong {
+        font-weight: bold;
+        color: #55A8DE;
+    }
+    
+    #search {
+        margin-left: 7%;
+        width: 80%;
+        height: 46px;
+        text-align: left;
+        padding-left: 0px;
+        line-height: 23%;
+        font-size: 26px;
+        margin-top: 3%;
+        padding-top: 0%;
+    }
+    
+    .cross {
+        position: fixed;
+    }
+    
+    img#crossicon {
+        border: 0;
+        padding: 10px;
+        /* position: fixed;*/
+    }
+    
+    img#burgericon {
+        border: 0;
+        margin-top: -39px;
+        float: right;
+        margin-right: 3%;
+    }
+    
+    .searchicon {
+        background-image: url('../MEETINGROOM/img/magnify.png');
+        background-repeat: no-repeat;
+        color: #aaaaaa;
+        background-position: right center;
+        padding-top: 1%;
+    }
+    
+    #sidepanel {
+        display: none;
+        width: 50%;
+        height: 16%;
+        margin-left: 49%;
+        margin-top: -9%;
+        position: fixed;
+        z-index: 1;
+    }
+    
+    #firstrow {
+        background-color: #56799e;
+        padding-top: 6%;
+        padding-left: 12.5%;
+        padding-bottom: 3%;
+        height: 53%;
+    }
+    
+    #secondrow {
+        background-color: white;
+        padding-top: 2%;
+        padding-left: 10%;
+        padding-bottom: 1%;
+        color: black;
+    }
+    
+    #locateroom {
+        color: white;
+        font-weight: lighter;
+        font-family: "Roboto";
+        margin-top: 1%;
+        display: none;
+    }
+    
+    #filterroom {
+        color: black;
+        font-weight: lighter;
+        font-family: "Roboto";
+    }
+    
+    .fa .fa-filter {
+        color: black;
+    }
+    
+    #filterimage {
+        height: 26px;
+        padding-top: 3%;
+    }
+    
+    .modal {
+        display: none;
+        position: fixed;
+        left: 0;
+        right: 0;
+        background-color: #fafafa;
+        padding: 0;
+        max-height: 90%;
+        width: 55%;
+        margin: auto;
+        overflow-y: auto;
+        border-radius: 2px;
+        will-change: top, opacity;
+    }
+    
+    #map {
+        width: 100%;
+        height: 250%;
+    }
+    /*#search input[type="text"]:focus {
+        width: 200px;
+    }*/
+    /*Placeholder style*/
+    
+    ::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        margin-top: 10px%;
+    }
+    
+    table {
+        width: 90%;
+        display: table;
+        color: #161616;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    
+    #tablehead {}
+    
+    .ui-autocomplete {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        float: left;
+        display: none;
+        min-width: 160px;
+        padding: 4px 0;
+        margin: 0 0 10px 25px;
+        list-style: none;
+        background-color: #ffffff;
+        border-style: solid;
+        border-width: 1px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
+        *border-right-width: 2px;
+        *border-bottom-width: 2px;
+    }
+    
+    .ui-menu-item>div.ui-menu-item-wrapper {
+        display: block;
+        padding: 3px 15px;
+        clear: both;
+        font-weight: normal;
+        line-height: 62px;
+        color: #555555;
+        white-space: nowrap;
+        text-decoration: none;
+        font-size: 17px;
+    }
+    
+    .ui-state-hover,
+    .ui-state-active {
+        color: #ffffff;
+        text-decoration: none;
+        background-color: lightgrey !important;
+        border-radius: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        background-image: none;
+    }
+    /*ui autocomplete*/
+    
+    .ui-menu .ui-menu-item div.ui-menu-item-wrapper:hover,
+    .ui-menu .ui-menu-item div.ui-menu-item-wrapper:focus,
+    .ui-menu .ui-menu-item div.ui-menu-item-wrapper:active {
+        background: lightgrey!important;
+        border: 1px solid lightgrey !important;
+        color: #000;
+        border-radius: 0;
+    }
+    
+    .ui-state-hover,
+    .ui-widget-content .ui-state-hover,
+    .ui-widget-header .ui-state-hover,
+    .ui-state-focus,
+    .ui-widget-content .ui-state-focus,
+    .ui-widget-header .ui-state-focus {
+        background: lightgrey;
+        border: none;
+        color: #000;
+        border-radius: 0;
+        font-weight: normal;
+    }
+    
+    th {
+        /*border-bottom: 1px solid lightgrey;
+        font-weight: normal;*/
+    }
+    
+    td,
+    th {
+        padding: 13px 33px;
+        display: table-cell;
+        text-align: left;
+        vertical-align: middle;
+    }
+    /*Ipad Latest */
+    
+    @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
+        .header {
+            background-color: #55A8DE;
+            color: #ffffff;
+            position: relative;
+            width: 100%;
+            height: 10%;
+        }
+    }
+    
+    @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape) {
+        /* your css rules for ipad landscape */
+        .header {
+            background-color: #55A8DE;
+            color: #ffffff;
+            position: relative;
+            width: 100%;
+            height: 10%;
+        }
+    }
+    /*Iphone 6 and above*/
+    
+    @media only screen and (max-device-width: 640px),
+    only screen and (max-device-width: 667px),
+    only screen and (max-width: 480px) {
+        #search {
+            margin-left: 7%;
+            width: 80%;
+            height: 46px;
+            text-align: left;
+            padding-left: 0px;
+            line-height: 23%;
+            font-size: 26px;
+            margin-top: 3%;
+            padding-top: 0%;
+        }
+        #description {
+            font-size: 16px;
+            color: #55A8DE;
+            margin-top: -10px;
+        }
+        #map {
+            width: 100%;
+            height: 70%;
+        }
+        #search input[type="text"]:focus {
+            width: 200px;
+        }
+        /* active state */
+        input:focus~label,
+        input:valid~label {
+            display: none;
+        }
+        .header {
+            background-color: #55A8DE;
+            color: #ffffff;
+            position: relative;
+            width: 100%;
+            height: 10%;
+        }
+        .title {
+            padding-top: 5%;
+            position: relative;
+        }
+    }
+    /* basic stylings ------------------------------------------ */
+    
+    .container {
+        font-family: 'Roboto';
+        width: 600px;
+        margin: 30px auto 0;
+        display: block;
+        background: #FFF;
+        padding: 10px 50px 50px;
+    }
+    
+    h2 {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    
+    h2 small {
+        font-weight: normal;
+        color: #888;
+        display: block;
+    }
+    
+    .footer {
+        text-align: center;
+    }
+    
+    .footer a {
+        color: #53B2C8;
+    }
+    /* form starting stylings ------------------------------- */
+    
+    .group {
+        position: relative;
+        margin-bottom: 45px;
+    }
+    
+    input {
+        font-size: 18px;
+        padding: 10px 10px 10px 5px;
+        display: block;
+        width: 300px;
+        border: none;
+        /*border-bottom: 1px solid #757575;*/
+    }
+    
+    input:focus {
+        outline: none;
+    }
+    /* LABEL ======================================= */
+    
+    label {
+        color: #999;
+        font-size: 32px;
+        font-weight: normal;
+        position: absolute;
+        pointer-events: none;
+        margin-top: 0%;
+        margin-left: 1%;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+    /* active state */
+    
+    input:focus~label,
+    input:valid~label {
+        margin-top: 3%;
+        margin-left: 7%;
+        font-size: 18px;
+    }
+    /* BOTTOM BARS ================================= */
+    
+    .bar {
+        position: relative;
+        display: block;
+        width: 85%;
+        margin-left: 7%;
+    }
+    
+    .bar:before,
+    .bar:after {
+        content: '';
+        height: 2px;
+        width: 0;
+        bottom: 1px;
+        position: absolute;
+        background: #5264AE;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+    
+    .bar:before {
+        left: 50%;
+    }
+    
+    .bar:after {
+        right: 50%;
+    }
+    /* active state */
+    
+    input:focus~.bar:before,
+    input:focus~.bar:after {
+        width: 50%;
+    }
+    /* HIGHLIGHTER ================================== */
+    
+    .highlight {
+        position: absolute;
+        height: 60%;
+        width: 100px;
+        top: 25%;
+        left: 0;
+        pointer-events: none;
+        opacity: 0.5;
+    }
+    /* active state */
+    
+    input:focus~.highlight {
+        -webkit-animation: inputHighlighter 0.3s ease;
+        -moz-animation: inputHighlighter 0.3s ease;
+        animation: inputHighlighter 0.3s ease;
+    }
+    /* ANIMATIONS ================ */
+    
+    @-webkit-keyframes inputHighlighter {
+        from {
+            background: #5264AE;
+        }
+        to {
+            width: 0;
+            background: transparent;
+        }
+    }
+    
+    @-moz-keyframes inputHighlighter {
+        from {
+            background: #5264AE;
+        }
+        to {
+            width: 0;
+            background: transparent;
+        }
+    }
+    
+    @keyframes inputHighlighter {
+        from {
+            background: #5264AE;
+        }
+        to {
+            width: 0;
+            background: transparent;
+        }
+    }
+    
+    .row {
+        margin-bottom: 0px;
+    }
+}
+    </style>
+</head>
+
+<body>
+    <div class="row">
+        <div style="display:block;" class="header s12 m12 l12 ">
+            <div class="s12 m12 l12">
+                <h5 class="center-align">ISI Meeting Room Finder</h5>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <!-- <h3>Text Goes here</h3> -->
+            <div class="row">
+                <form>
+                    <div class="input-field col s12">
+                        <input id="search" type="search" onfocus="this.placeholder = ''" onblur="this.placeholder = ''" autocorrect="off" autocapitalize="off">
+                        <label for="Search" class="active">Search</label>
+                        <!-- 
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label>Search</label> -->
+                        <!-- <img id="searchicon" src="/Users/randeepj/Downloads/MeetingRoom/Searchblack.png" alt=""/></input> -->
+                    </div>
+                </form>
+                <div id="resultWrapper" class=" s12 m12 l12 center-align">
+                    <div class="row">
+                        <div class="col s12">
+                            <div id="description" class="center-align">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <div id="mapwrapper" class="mapimage center-align s12 m12 l12">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                $(document).ready(function() {});
+                $(document).keypress(function(e) {
+                    if (e.which == 13) {
+                        $("input").blur();
+
+                    }
+                });
+                </script>
+</body>
+<!-- Load Custom Script at the bottom -->
+<script>
+$(function() {
+    var availableTags = [];
+    var searchedItem = '';
+    $("#search").autocomplete({
+        source: availableTags
+    });
+
+    $("#search").on("autocompleteselect", function(event, ui) {
+        console.log('select event triggered');
+        $('#mapwrapper').empty();
+        $("#description").empty();
+        searchedItem = ui.item.value;
+        showResult(ui.item.value);
+    });
+
+    //clear result on clicking searchbar
+    $("#search").on("click", function() {
+        if ($(this).val() != "") {
+            $(this).val("");
+            $("#description").empty();
+            $('#mapwrapper').empty();
+        }
+    });
+
+    //Global Parameters
+    var imageCacheArray = [];
+    var rawdata;
+    var roomData;
+    var roomName;
+    var roomLocation;
+    var bulding;
+    var roomMap;
+
+    //Result wrapper
+    var result = {
+        name: "",
+        building: "",
+        location: "",
+        image: ""
+    };
+
+    function buildImageFacade() {
+        var img = new Image();
+        img.onload = function() {
+            console.log("ImageFacade invoked");
+        }
+        img.src = "https://intusurgops.sharepoint.com/company/locations/Shared%20Documents/Meeting%20Rooms%20-%20images/B950.png";
+    }
+    //Fetch data from remote location
+    var url = "https://api.myjson.com/bins/z17k";
+
+    //*************************************************************
+    //Closure function, to invoke by self on load
+    //call method in order using promises $.get
+    //get data, then convert to jsObject and then
+    // fetch images and then populate auto-suggestion tags
+    //*************************************************************
+
+    function getJSON(url) {
+        rawdata = $.get(url);
+        return rawdata;
+    }
+
+    //convert string to object
+    function converToObject() {
+        return roomData = jQuery.parseJSON(rawdata.responseText);
+    }
+
+    //populate tags
+    function populateTags() {
+        $.each(roomData, function(key, value) {
+            availableTags.push(roomData[key].name);
+        });
+    }
+
+    function preloadImages(array) {
+        if (!preloadImages.list) {
+            preloadImages.list = [];
+        }
+        var list = preloadImages.list;
+        for (var i = 0; i < array.length; i++) {
+            var img = new Image();
+            img.onload = function() {
+                var index = list.indexOf(this);
+                if (index !== -1) {
+                    // remove image from the array once it's loaded
+                    // for memory consumption reasons
+                    list.splice(index, 1);
+                }
+            }
+            list.push(img);
+            img.src = array[i];
+        }
+        console.log('download all images on the back');
+    }
+    //prefectch images 
+    function prefectchImages() {
+        $.each(roomData, function(key, value) {
+            imageCacheArray.push(roomData[key].image);
+        });
+        console.log('building image cache array');
+    }
+
+    //call on load in async fashion dramatically
+    (function() {
+        getJSON(url).then(converToObject).then(populateTags).then(prefectchImages);
+    }());
+
+    //********************************
+    //Offline Support for Images
+    //********************************
+
+    $(document).ready(function() {
+        //After 1 second of page load,download first image
+        setTimeout(function() {
+            buildImageFacade();
+        }, 1000);
+
+        //After two second of page load, now download all images 
+        //store them local for offline support
+        setTimeout(function() {
+            preloadImages(imageCacheArray);
+        }, 2000);
+
+    });
+
+    //Search method to search for room and fill up the value swhen foudn 
+    function searchForRoom(param) {
+
+        var matchingRoom;
+        for (var i = 0; i < roomData.length; i++) {
+            if (roomData[i].name == param) {
+                matchingRoom = roomData[i];
+                break;
+            }
+        }
+        if (matchingRoom) {
+            console.log(matchingRoom.name);
+            var buildingcode = matchingRoom.name.split("-");
+            buildingcode = buildingcode + '-';
+            var resultToShow = matchingRoom.name + " can be found on the <b> " + matchingRoom.location + "</b> of <br/> building " + matchingRoom.building;
+            $('#description').show();
+            $("#description").html(resultToShow);
+            $('#mapwrapper').append('<img id="map" class="slideInDown" src="' + matchingRoom.image + '" />');
+            return true;
+        } else {
+            console.log("No match");
+            $('#description').show();
+            $("#description").text("No Matching Room Found");
+            return false;
+        }
+    }
+
+    function showResult(param) {
+        searchForRoom(param);
+    }
+    $(document).keypress(function(e) {
+        if (e.which == 13) {
+            showResult(searchedItem);
+            alert(searchItem);
+            $("input").blur();
+        };
+    });
+    //Search Click Function 
+    $("#searchbutton").click(function() {
+        showResult();
+    });
+});
+</script>
+
+</html>

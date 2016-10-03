@@ -1,0 +1,12 @@
+{
+  "name": "maplocator",
+  "description": "node application - maplocator on heroku platform with cloudinary",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies":{
+    "express": "~4.14.0",
+    "cloudinary":"~1.4.2"
+  } 
+}
