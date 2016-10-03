@@ -593,6 +593,7 @@ $(function() {
         source: availableTags
     });
 
+    //Fix for double click (Tap) on phone issue
     $("#search").autocomplete({
         open: function(event, ui) {
             $('.ui-autocomplete').off('menufocus hover mouseover mouseenter');
