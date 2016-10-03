@@ -593,6 +593,12 @@ $(function() {
         source: availableTags
     });
 
+    $("#search").autocomplete({
+        open: function(event, ui) {
+            $('.ui-autocomplete').off('menufocus hover mouseover mouseenter');
+        }
+    });
+
     $("#search").on("autocompleteselect", function(event, ui) {
         console.log('select event triggered');
         $('#mapwrapper').empty();

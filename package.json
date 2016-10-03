@@ -7,6 +7,7 @@
   },
   "dependencies":{
     "express": "~4.14.0",
-    "cloudinary":"~1.4.2"
+    "cloudinary":"~1.4.2",
+    "cloudinary-jquery":"2.1.2"
   } 
 }
